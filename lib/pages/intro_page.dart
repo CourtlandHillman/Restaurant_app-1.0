@@ -7,7 +7,7 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Color.fromARGB(255, 126, 42, 36),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -15,50 +15,62 @@ class IntroPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-          SizedBox(
+            const SizedBox(
               height: 25,
             ),
-          //shop_name
-        Text("SUSHI KHAN" ,  
-         style: GoogleFonts.dmSerifDisplay(
-          fontSize: 26,
-          color: Colors.white,
-         ),),
-      
-        SizedBox(
-              height: 25,
+            //shop_name
+            Text(
+              "SUSHI KHAN",
+              style: GoogleFonts.dmSerifDisplay(
+                fontSize: 26,
+                color: Colors.white,
+              ),
             ),
-          //icon 
-        Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Image.asset('lib/images/sushi with salmon.png'),
-        ),
-      
-          //title
-        Text("THE TASTE OF REAL UKRAINIAN SUSHI", 
-        style: GoogleFonts.dmSerifDisplay(
-          fontSize: 44,
-          color: Colors.white,
-         ),),
-      
-          
-        SizedBox(
-              height: 15,
-            ),  
-          //SUBTITLE
-        Text("Feel the taste of the most popular Ukrainian food from anywhere and anytime",
-          style: GoogleFonts.dmSerifDisplay(
-          fontSize: 12,
-          color: Colors.white,),
-        ),
 
-        SizedBox(
+            const SizedBox(
               height: 25,
             ),
-      
-          //get started button
-        MyButton(text: "Get Started"),
-        ],
+            //icon
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Image.asset('lib/images/sushi with salmon.png'),
+            ),
+
+            //title
+            Text(
+              "THE TASTE OF REAL UKRAINIAN SUSHI",
+              style: GoogleFonts.dmSerifDisplay(
+                fontSize: 44,
+                color: Colors.white,
+              ),
+            ),
+
+            const SizedBox(
+              height: 15,
+            ),
+            //SUBTITLE
+            Text(
+              "Feel the taste of the most popular Ukrainian food from anywhere and anytime",
+              style: GoogleFonts.dmSerifDisplay(
+                fontSize: 12,
+                color: Colors.white,
+              ),
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            //get started button
+            MyButton(
+              
+              text: "Get Started",
+              onTap: () {
+                // go to menu page
+                Navigator.pushNamed(context, '/menupage');
+              },
+            ),
+          ],
         ),
       ),
     );
