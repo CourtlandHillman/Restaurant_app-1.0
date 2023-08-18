@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restaurant_app/components/button.dart';
 import 'package:restaurant_app/models/food.dart';
+import 'package:restaurant_app/pages/food_details_page.dart';
 import 'package:restaurant_app/theme/colors.dart';
 
 import '../components/fod_tile.dart';
@@ -16,31 +17,43 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
 //food menu
   List foodMenu = [
-   //classic
-Food(
-  name: "Classic", 
-  price: "130.00", 
-  imagePath: "lib/images/classic.png", 
-  rating: "4.5"),
-   //beef
-Food(
-  name: "Sushi With Beef", 
-  price: "150.00", 
-  imagePath: "lib/images/sushi with beef.png", 
-  rating: "4.3"),
-   //egg
-Food(
-  name: "Sushi With Salmon's eggs", 
-  price: "155.00", 
-  imagePath: "lib/images/sushi with egg.png", 
-  rating: "4.8"),
-   //salmon
-Food(
-  name: "Sushi With Salmon", 
-  price: "145.00", 
-  imagePath: "lib/images/sushi with salmon.png", 
-  rating: "4.7"),
+    //classic
+    Food(
+        name: "Classic",
+        price: "130.00",
+        imagePath: "lib/images/classic.png",
+        rating: "4.5"),
+    //beef
+    Food(
+        name: "Sushi With Beef",
+        price: "150.00",
+        imagePath: "lib/images/sushi with beef.png",
+        rating: "4.3"),
+    //egg
+    Food(
+        name: "Sushi With Salmon's eggs",
+        price: "155.00",
+        imagePath: "lib/images/sushi with egg.png",
+        rating: "4.8"),
+    //salmon
+    Food(
+        name: "Sushi With Salmon",
+        price: "145.00",
+        imagePath: "lib/images/sushi with salmon.png",
+        rating: "4.7"),
   ];
+
+  // navigate to food item details page
+  void navigateToFoodItemDetails(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FoodDetailsPage(
+          food: foodMenu[index],
+          ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,16 +124,16 @@ Food(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
               decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(20),
-                   ),
-                   hintText: "Search here..",
-                  ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                hintText: "Search here..",
+              ),
             ),
           ),
 
@@ -144,21 +157,20 @@ Food(
             height: 10,
           ),
 
-        Expanded(
-          
+          Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:foodMenu.length ,
-              itemBuilder: (context , index ) => FoodTile(
+              itemCount: foodMenu.length,
+              itemBuilder: (context, index) => FoodTile(
                 food: foodMenu[index],
-                ),
-                ),
-          
-             ),
+                onTap: () => navigateToFoodItemDetails(index),
+              ),
+            ),
+          ),
 
-             const SizedBox(
-              height: 25,
-             ),
+          const SizedBox(
+            height: 25,
+          ),
 
           //pop food
           Container(
@@ -166,10 +178,10 @@ Food(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(20),
             ),
-            margin: const EdgeInsets.only(left: 25 , right: 25 , bottom: 25),
+            margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
             padding: const EdgeInsets.all(20),
             child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceBetween ,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -177,35 +189,39 @@ Food(
                       'lib/images/classic.png',
                       height: 60,
                     ),
-                    const SizedBox(width:20 ,),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Classic" , 
-                        style: GoogleFonts.dmSerifDisplay(
-                          fontSize: 18,
+                        Text(
+                          "Classic",
+                          style: GoogleFonts.dmSerifDisplay(
+                            fontSize: 18,
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "\$130.00",
+                          style: TextStyle(
+                            color: Colors.grey[700],
                           ),
-              const SizedBox(
-                    height: 10,
-             ),
-
-             Text("\$130.00" , style: TextStyle(
-              color: Colors.grey[700],
-             ),
-             ),
+                        ),
                       ],
                     ),
                   ],
                 ),
-              Icon(
-                Icons.favorite_outline , 
-                color: Colors.grey, 
-                size:28 ,)
+                Icon(
+                  Icons.favorite_outline,
+                  color: Colors.grey,
+                  size: 28,
+                )
               ],
             ),
           ),
-
         ],
       ),
 
