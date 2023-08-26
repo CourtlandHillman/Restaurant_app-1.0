@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/components/button.dart';
 import 'package:restaurant_app/models/food.dart';
 import 'package:restaurant_app/theme/colors.dart';
+
+import '../models/shop.dart';
 
 class FoodDetailsPage extends StatefulWidget {
   final Food food;
@@ -23,7 +26,9 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
   //decv=rement
   void decrementQuantity() {
     setState(() {
-      quantityCount--;
+      if (quantityCount > 0) {
+        quantityCount--;
+      }
     });
   }
 
@@ -35,8 +40,45 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
   }
   //add to cart method
 
-  void  addToCart () {
+  void addToCart() {
+    if (quantityCount > 0) {
+      //get access to shop
+      final shop = context.read<Shop>();
 
+      //add to cart
+      shop.addToCart(widget.food, quantityCount);
+      //let the user know it
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          backgroundColor: primaryColor,
+          content: Text("Successful added" ,  style: TextStyle(
+            color: Colors.white,) ,
+            textAlign: TextAlign.center,
+            ),
+          actions: [
+            //okay button
+            IconButton(
+              onPressed: () {
+                //pop once to remove dialog
+                Navigator.pop(context);
+
+                //pop twice to see previouse
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.done , 
+                color: Colors.white,
+                ) ,
+            ),
+
+            //
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -164,52 +206,51 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                             onPressed: decrementQuantity,
                             icon: const Icon(
                               Icons.remove,
-                              color: Colors.white,),
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         //count
                         SizedBox(
-                          width:40 ,
+                          width: 40,
                           child: Center(
-                            child: Text(quantityCount.toString(),
-                             style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                             ),
+                            child: Text(
+                              quantityCount.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
-                       
+
                         //plus button
                         Container(
                           decoration: BoxDecoration(
                             color: secondaryColor,
                             shape: BoxShape.circle,
-                            ),
+                          ),
                           child: IconButton(
                             onPressed: incrementQuantity,
                             icon: const Icon(
-                            Icons.add,
-                            color: Colors.white,
+                              Icons.add,
+                              color: Colors.white,
                             ),
                           ),
                         ),
                         //
                       ],
                     ),
-
-
                   ],
                 ),
-                     const SizedBox(
-                      height: 15,
-                    ),
-
-                    MyButton(
-                      text: "Add To Cart", 
-                      onTap: addToCart,
-                    ),
+                const SizedBox(
+                  height: 15,
+                ),
+                MyButton(
+                  text: "Add To Cart",
+                  onTap: addToCart,
+                ),
               ],
             ),
           ),
